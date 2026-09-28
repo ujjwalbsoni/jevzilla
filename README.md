@@ -8,6 +8,33 @@ A fearless, lightweight Python client for the JEV decision evaluation API with *
 
 Write decision payloads exactly like the [official JEV API docs](https://jevplayground.com/jev-api), and JEVzilla handles the translation automatically. Perfect for operational decisions, compliance automation, and AI-driven business logic.
 
+## 🤔 What is JEV?
+
+**JEV** is a **decision layer for software applications** — not a chatbot or text generator, but a system designed to make **structured, typed decisions** that your code can consume and act on.
+
+Given a piece of context (called **state**), JEV answers **typed questions** and returns **structured answers with probability signals**. Your application then branches on these decisions to automate workflows, route requests, or flag for human review.
+
+### Why JEV is Different
+
+| Traditional LLM | JEV |
+|---|---|
+| Open-ended text responses | **Bounded, typed decisions** |
+| Requires parsing output | **Structured JSON answers** |
+| May hallucinate or ramble | **Focused yes/no, choice, or score** |
+| Hard to integrate into workflows | **Built for programmatic consumption** |
+
+**JEV is best for:**
+- ✅ Operational triage & routing (which team owns this?)
+- ✅ Risk/severity scoring (how critical is this?)
+- ✅ Yes/no classification (should this be escalated?)
+- ✅ Conditional business logic (decide what happens next)
+
+**JEV is NOT for:**
+- ❌ Open-ended explanations
+- ❌ Creative content generation
+- ❌ Long conversational responses
+- → Use a generative LLM for those
+
 ## ✨ What Makes JEVzilla Special
 
 - **Production-Ready Examples**: 150+ real-world business decision scripts, fully runnable
@@ -64,15 +91,69 @@ payload = jev.build({
 print(payload)
 ```
 
-## 🎯 Question Types
+## 🎯 The Three Question Types
 
-JEVzilla supports three core question types:
+JEV supports three core question types for making decisions:
 
-| Type | Purpose | Example |
-|------|---------|---------|
-| **noul** | Yes/no binary decision | `noul("Is this urgent?")` |
-| **choice** | Select one from options | `choice("Route to:", {"sales": "Sales Team", "support": "Support"})` |
-| **score** | Rank by priority/severity | `score("Severity?", ["Low", "Medium", "High"])` |
+### **Noul** — Yes/No Judgment
+A **focused, proposition-based question** that returns a probability between 0 and 1.
+
+**When to use:** Single yes/no decisions, risk flags, human review gates
+```python
+noul("Does this request contain an urgent deadline?")
+# Returns: {"noul": 0.87}  (87% confidence it's urgent)
+```
+
+**Real examples:**
+- "Should this order be flagged for manual review?"
+- "Does the customer have churn risk?"
+- "Is this transaction fraudulent?"
+
+---
+
+### **Choice** — Classification & Routing
+Select **one option from a predefined set** of categories, plus confidence scores.
+
+**When to use:** Routing decisions, ticket classification, routing to teams
+```python
+choice("Which team should handle this?", {
+    "billing": "Payments & billing issues",
+    "technical": "Technical problems",
+    "support": "General support requests"
+})
+# Returns: {"choice": "billing", "confidence": 0.92}
+```
+
+**Real examples:**
+- "Route this ticket to: Sales, Support, or Technical?"
+- "Classify this transaction: Normal, Suspicious, or Blocked?"
+- "Which priority bucket: Low, Medium, High, or Critical?"
+
+---
+
+### **Score** — Severity, Priority, or Quality Ranking
+Rank context on an **ordered scale** with confidence signals (e.g., Low → Medium → High → Critical).
+
+**When to use:** Risk/severity scoring, priority ranking, quality assessment
+```python
+score("How urgent is this incident?", ["Routine", "Time-sensitive", "Blocked"])
+# Returns: {"score": 2, "legend": ["Routine", "Time-sensitive", "Blocked"]}
+```
+
+**Real examples:**
+- "Incident severity: Info, Warning, or Critical?"
+- "Churn risk: Low, Medium, or High?"
+- "Loan approval score: 1–5?"
+
+---
+
+### Summary Table
+
+| Type | Question | Answer | Use Case |
+|------|----------|--------|----------|
+| **noul** | Yes/no proposition | 0.0–1.0 probability | Gate decisions, flags |
+| **choice** | Pick one category | One option + confidence | Routing, classification |
+| **score** | Rank on ordered scale | Position + probability | Risk/severity scoring |
 
 ## 🔧 Advanced Features
 
@@ -287,13 +368,37 @@ MIT License — see LICENSE file for details.
 
 Contributions welcome! Submit issues, feature requests, or pull requests on GitHub.
 
-## 🎓 Use Cases
+## 🎓 Use Cases & Patterns
+
+### Gate + Route + Priority Pattern
+
+Every JEVzilla example follows the same battle-tested pattern:
+
+1. **Gate** (`noul`): **Should this be escalated/flagged?**
+   - "Does this need manual review?"
+   - "Is this a fraud risk?"
+
+2. **Route** (`choice`): **Which team owns this?**
+   - "Route to: Billing, Technical, or Support?"
+   - "Assign to: Team A, Team B, or Team C?"
+
+3. **Priority** (`score`): **How urgent/severe is it?**
+   - "Severity: Low, Medium, High, or Critical?"
+   - "Priority: Routine, Standard, or Urgent?"
+
+This consistency makes decisions **predictable, auditable, and easy to act on**.
+
+### Real-World Applications
 
 - **Compliance & Automation**: Flag risky applications, contracts, or transactions
 - **Operational Triage**: Route tickets, incidents, and requests to the right team
-- **Risk Assessment**: Score vendors, customers, and transactions
+- **Risk Assessment**: Score vendors, customers, transactions for underwriting/approval
 - **Quality Control**: Review content, code, or documentation
-- **Decision Support**: Augment human judgment with consistent AI reasoning
+- **Decision Support**: Augment human judgment with structured, consistent reasoning
+- **Fraud Detection**: Identify suspicious patterns and route for investigation
+- **Customer Support**: Triage complaints, determine response level, route to specialists
+- **HR & Recruiting**: Screen resumes, assess candidates, route for interviews
+- **Incident Response**: Classify severity, route to on-call engineer, set SLA
 
 ## ⚠️ Important Notes
 
