@@ -60,16 +60,28 @@ For **production use**, get an API key from one of these services:
 - **TypeSafe Official**: https://api.typesafe.ai
 - Or use **Playground** endpoint for testing (no key needed)
 
-Set your API key as an environment variable:
+#### Set API Key as Environment Variable
+
+**Bash/Linux/Mac:**
 ```bash
-# OpenRouter
-export OPENROUTER_API_KEY="your-key-here"
-
-# TypeSafe
+export OPENROUTER_API_KEY="sk-or-..."
 export TYPESAFE_API_KEY="your-key-here"
+```
 
-# On Windows PowerShell:
-# $env:OPENROUTER_API_KEY = "your-key-here"
+**Windows PowerShell:**
+```powershell
+$env:OPENROUTER_API_KEY = "sk-or-..."
+$env:TYPESAFE_API_KEY = "your-key-here"
+```
+
+**In Python Code:**
+```python
+import os
+os.environ["OPENROUTER_API_KEY"] = "sk-or-..."
+os.environ["TYPESAFE_API_KEY"] = "your-key-here"
+
+from jevzilla import JEVzilla
+jev = JEVzilla(backend="openrouter")  # Reads env var automatically
 ```
 
 ### Basic Usage
