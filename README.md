@@ -52,6 +52,26 @@ Given a piece of context (called **state**), JEV answers **typed questions** and
 pip install jevzilla
 ```
 
+### Getting an API Key (Recommended)
+
+For **production use**, get an API key from one of these services:
+
+- **OpenRouter** (Recommended): https://openrouter.ai/keys
+- **TypeSafe Official**: https://api.typesafe.ai
+- Or use **Playground** endpoint for testing (no key needed)
+
+Set your API key as an environment variable:
+```bash
+# OpenRouter
+export OPENROUTER_API_KEY="your-key-here"
+
+# TypeSafe
+export TYPESAFE_API_KEY="your-key-here"
+
+# On Windows PowerShell:
+# $env:OPENROUTER_API_KEY = "your-key-here"
+```
+
 ### Basic Usage
 
 ```python
@@ -76,6 +96,59 @@ response = jev.evaluate({
 print(response.status_code, response.answers)
 # Output: 200 {'refund_review': {...}, 'team': {...}, 'urgency': {...}}
 ```
+
+### Using Different Backends
+
+JEVzilla supports three backends. **For production, use OpenRouter or TypeSafe** for better reliability:
+
+#### OpenRouter (Recommended for Production)
+
+```bash
+# 1. Get API key from https://openrouter.ai/keys
+# 2. Set environment variable
+export OPENROUTER_API_KEY="your-api-key-here"
+
+# On Windows PowerShell:
+# $env:OPENROUTER_API_KEY = "your-api-key-here"
+```
+
+```python
+from jevzilla import JEVzilla, noul
+
+# Automatically uses OPENROUTER_API_KEY environment variable
+jev = JEVzilla(backend="openrouter")
+
+response = jev.evaluate({
+    "state": "Customer issue",
+    "questions": {
+        "urgent": noul("Is this urgent?"),
+    },
+})
+```
+
+#### TypeSafe API (Official)
+
+```bash
+# Get API key from https://api.typesafe.ai
+export TYPESAFE_API_KEY="your-api-key-here"
+```
+
+```python
+jev = JEVzilla(backend="typesafe")
+```
+
+#### Playground (Default, for Testing)
+
+```python
+# No API key needed — uses public endpoint
+jev = JEVzilla()  # or backend="playground"
+```
+
+| Backend | Reliability | Speed | Cost | Best For |
+|---------|-------------|-------|------|----------|
+| **OpenRouter** | ⭐⭐⭐⭐⭐ | Fast | Paid | Production |
+| **TypeSafe** | ⭐⭐⭐⭐⭐ | Fast | Paid | Production |
+| **Playground** | ⭐⭐⭐ | Variable | Free | Testing/Development |
 
 ### Inspecting the Payload
 
@@ -179,16 +252,19 @@ response = jev.ask_score(
 )
 ```
 
-### Custom Backends
+### Custom URL & Headers
 
 ```python
-# Official TypeSafe API (requires TYPESAFE_API_KEY env var)
-jev = JEVzilla(backend="typesafe")
+# Custom endpoint URL
+jev = JEVzilla(backend="typesafe", url="https://custom.api.com/v1/evaluate")
 
-# OpenRouter API (requires OPENROUTER_API_KEY env var)
-jev = JEVzilla(backend="openrouter")
+# Pass extra headers
+jev = JEVzilla(
+    backend="openrouter",
+    extra_headers={"X-Custom-Header": "value"}
+)
 
-# Custom URL or API key
+# Explicitly pass API key (instead of env var)
 jev = JEVzilla(backend="typesafe", api_key="your-api-key-here")
 ```
 
