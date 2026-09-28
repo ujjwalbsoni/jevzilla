@@ -4,14 +4,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PyPI](https://img.shields.io/badge/pypi-jevzilla-brightgreen.svg)](https://pypi.org/project/jevzilla/)
 
-A fearless, lightweight Python client for the JEV decision evaluation API with **100 production-ready business decision examples** across 20 sectors.
+A fearless, lightweight Python client for the JEV decision evaluation API with **150+ production-ready business decision examples** across 30 sectors.
 
 Write decision payloads exactly like the [official JEV API docs](https://jevplayground.com/jev-api), and JEVzilla handles the translation automatically. Perfect for operational decisions, compliance automation, and AI-driven business logic.
 
 ## ✨ What Makes JEVzilla Special
 
-- **Production-Ready Examples**: 100 real-world business decision scripts, fully runnable
-- **Multi-Sector Coverage**: HR, Finance, Healthcare, Legal, Banking, Insurance, Cybersecurity, Retail, Supply Chain, and 10+ more
+- **Production-Ready Examples**: 150+ real-world business decision scripts, fully runnable
+- **Multi-Sector Coverage**: 30 sectors including HR, Finance, Healthcare, Legal, Banking, Insurance, Cybersecurity, Retail, Supply Chain, Construction, Agriculture, Transportation, Food & Beverage, Pharmaceutical, Government, Aviation, Tourism, Environmental, Sports, and more
 - **Simple, Intuitive API**: Just `noul()` (yes/no), `choice()` (select one), and `score()` (prioritize)
 - **Flexible Backends**: Playground, Official API, or OpenRouter
 - **Zero Boilerplate**: Auto-translates payloads — no manual wire format needed
@@ -137,9 +137,11 @@ for decision in decisions:
         print(f"Answer: {response.answers}")
 ```
 
-## 📚 100 Real-World Examples
+## 📚 150+ Real-World Examples Across 30 Sectors
 
-JEVzilla includes **100 production-ready business decision scripts** organized by sector:
+JEVzilla includes **150+ production-ready business decision scripts** organized by sector:
+
+### Original 20 Sectors (100 examples)
 
 | Sector | Scripts | Use Cases |
 |--------|---------|-----------|
@@ -161,8 +163,23 @@ JEVzilla includes **100 production-ready business decision scripts** organized b
 | **Energy/Utilities** | 5 | Outage triage, Meter anomalies, Safety incidents, Assistance review, Maintenance |
 | **Hospitality** | 5 | Guest complaints, Booking fraud, Overbooking, Travel refunds, Review responses |
 | **Media/Entertainment** | 5 | Content moderation, Copyright claims, Brand safety, Comments, Licensing |
-| **Cybersecurity** | 5 | Access anomalies, Incident response, Phishing, Vendor risk, Vulnerability |
-| **Sales** | 5+ | Lead qualification, Deal risk, Churn prediction, Proposals, Discounts |
+| **Telecom** | 5 | Outage triage, SIM swap review, Churn risk, Billing disputes, Upgrade eligibility |
+| **Sales** | 5 | Lead qualification, Deal risk, Churn prediction, Proposals, Discount approvals |
+
+### NEW 10 Sectors (50 examples)
+
+| Sector | Scripts | Use Cases |
+|--------|---------|-----------|
+| **Construction** | 5 | Site safety triage, Contractor vetting, Project delay risk, Equipment maintenance, Permit compliance |
+| **Agriculture** | 5 | Crop health assessment, Equipment maintenance, Pest/disease triage, Supplier quality, Harvest readiness |
+| **Transportation** | 5 | Vehicle maintenance scheduling, Accident damage assessment, Warranty claims, Fuel efficiency, Recall prioritization |
+| **Food & Beverage** | 5 | Health inspection escalation, Food safety incidents, Supplier quality, Customer complaints, Menu performance |
+| **Pharmaceutical** | 5 | Clinical trial eligibility, Adverse event severity, Drug compound quality, Regulatory compliance gaps, Research proposals |
+| **Government** | 5 | Permit applications, Public assistance eligibility, Compliance violations, Budget allocation, FOIA requests |
+| **Aviation** | 5 | Maintenance scheduling, Safety incidents, Pilot incidents, Regulatory compliance, Crew scheduling |
+| **Tourism** | 5 | Booking fraud detection, Travel insurance claims, Destination safety, Customer complaints, Tour guide vetting |
+| **Environmental** | 5 | Environmental incidents, Compliance violations, Carbon footprint, Waste management, Green certification |
+| **Sports & Fitness** | 5 | Gym membership eligibility, Training injury assessment, Equipment maintenance, Member complaints, Program recommendations |
 
 ### Running Examples
 
